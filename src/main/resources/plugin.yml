@@ -1,0 +1,13 @@
+name: GhastCore
+version: '2.0'
+main: com.ninja.ghast.ghastCore.GhastCore
+api-version: '1.21'
+load: STARTUP
+commands:
+  gcore:
+    description: GhastCore management commands
+    usage: /<command> [help|list|register|reload|unregister|check|load|scan|load-all]
+permissions:
+  ghastcore.command:
+    description: Allows access to GhastCore management commands
+    default: op

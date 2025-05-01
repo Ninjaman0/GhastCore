@@ -1,0 +1,5 @@
+Copyright (c) 2025 Ninja0_0
+
+This plugin is custom-made for private use on the Ghast Legion Minecraft server.
+You may not copy, redistribute, sell, or modify this software without explicit permission from the author.
+All rights reserved.

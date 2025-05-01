@@ -1,0 +1,44 @@
+######################################################################################
+#                                                                                    #
+#    ██████╗ ██╗  ██╗ █████╗ ███████╗████████╗     ██████╗ ██████╗ ██████╗ ███████╗  #
+#   ██╔════╝ ██║  ██║██╔══██╗██╔════╝╚══██╔══╝    ██╔════╝██╔═══██╗██╔══██╗██╔════╝  #
+#   ██║  ███╗███████║███████║███████╗   ██║       ██║     ██║   ██║██████╔╝█████╗    #
+#   ██║   ██║██╔══██║██╔══██║╚════██║   ██║       ██║     ██║   ██║██╔══██╗██╔══╝    #
+#   ╚██████╔╝██║  ██║██║  ██║███████║   ██║       ╚██████╗╚██████╔╝██║  ██║███████╗  #
+#    ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝   ╚═╝        ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝  #
+#                                                                                    #
+#                          GHASTCORE CONFIGURATION FILE                              #
+#                           Modify with care. You got this.                          #
+######################################################################################
+
+# Database settings: Choose between 'sqlite' or 'mysql'.
+database:
+  type: sqlite       # Use 'sqlite' for local flat file storage. Switch to 'mysql' for external DB.
+  mysql:
+    host: localhost  # MySQL server address (used only if type is mysql)
+    port: 3306       # Default MySQL port
+    database: ghastcore  # Database name
+    username: root       # Database username
+    password: password   # ⚠️ Change this before production!
+  pool:
+    max-size: 10         # Max number of database connections in the pool
+    idle-timeout: 30000  # Time (ms) before idle DB connections are closed
+
+# Cache settings for in-memory performance boosts.
+caching:
+  enabled: true           # Enable or disable caching
+  flushIntervalSeconds: 300  # How often (in seconds) to flush/refresh cache data
+
+# Logging verbosity for internal systems.
+logging:
+  level: INFO             # Options: ERROR, WARN, INFO, DEBUG
+
+# Extension plugin behavior control.
+extensions:
+  continue-on-error: true    # If true, failed extension loads won't crash the core
+  lazy-load: false           # If true, load extensions only when needed (currently disabled)
+  recursive-scan: false      # If true, search subfolders in /extensions directory
+  max-scan-depth: 3          # If recursive is true, how deep to scan into subfolders
+  async-scan: true           # If true, scan for extensions asynchronously
+  max-loaded: 15             # Max number of extensions to load at once (to avoid overloading)
+  unload-after-minutes: 30   # How long (in minutes) before unused extensions are auto-unloaded
