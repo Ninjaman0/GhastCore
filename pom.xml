@@ -11,12 +11,12 @@
 
     <name>GhastCore</name>
     <description>A modular plugin framework for Paper servers</description>
-    <url>https://github.com/Ninjaman0/Ghastcore</url>
+    <url>https://github.com/Ninjaman0/GhastCore</url>
 
     <scm>
-        <connection>scm:git:git://github.com/Ninjaman0/Ghastcore.git</connection>
-        <developerConnection>scm:git:ssh://github.com/Ninjaman0/Ghastcore.git</developerConnection>
-        <url>https://github.com/Ninjaman0/Ghastcore</url>
+        <connection>scm:git:git://github.com/Ninjaman0/GhastCore.git</connection>
+        <developerConnection>scm:git:ssh://github.com/Ninjaman0/GhastCore.git</developerConnection>
+        <url>https://github.com/Ninjaman0/GhastCore</url>
     </scm>
 
     <repositories>
@@ -40,7 +40,7 @@
         <dependency>
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
-            <version>3.46.1.2</version>
+            <version>3.46.1</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -75,8 +75,8 @@
                 <executions>
                     <execution>
                         <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
+                        <groups>
+                            <group>shade</group>
                         </goals>
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
