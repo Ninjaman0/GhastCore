@@ -25,7 +25,7 @@ Add GhastCore as a dependency in your `pom.xml`:
 </repositories>
 <dependencies>
     <dependency>
-        <groupId>com.github.yourusername</groupId>
+        <groupId>com.github.Ninjaman0</groupId>
         <artifactId>GhastCore</artifactId>
         <version>v2.0</version>
         <scope>provided</scope>
