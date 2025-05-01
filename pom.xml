@@ -11,12 +11,12 @@
 
     <name>GhastCore</name>
     <description>A modular plugin framework for Paper servers</description>
-    <url>https://github.com/Ninjaman0/GhastCore</url>
+    <url>https://github.com/Ninjaman0/Ghastcore</url>
 
     <scm>
-        <connection>scm:git:git://github.com/Ninjaman0/GhastCore.git</connection>
-        <developerConnection>scm:git:ssh://github.com/Ninjaman0/GhastCore.git</developerConnection>
-        <url>https://github.com/Ninjaman0/GhastCore</url>
+        <connection>scm:git:git://github.com/Ninjaman0/Ghastcore.git</connection>
+        <developerConnection>scm:git:ssh://github.com/Ninjaman0/Ghastcore.git</developerConnection>
+        <url>https://github.com/Ninjaman0/Ghastcore</url>
     </scm>
 
     <repositories>
