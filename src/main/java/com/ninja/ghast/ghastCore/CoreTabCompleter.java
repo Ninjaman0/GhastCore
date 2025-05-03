@@ -33,7 +33,7 @@ public class CoreTabCompleter implements TabCompleter {
         }
 
         if (args.length == 2 && args[0].equalsIgnoreCase("load")) {
-            completions.addAll(extensionManager.getPendingExtensions().keySet());
+            completions.addAll(extensionManager.getExtensions().keySet());
             return filterCompletions(completions, args[1]);
         }
 

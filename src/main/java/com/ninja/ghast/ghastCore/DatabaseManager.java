@@ -82,7 +82,7 @@ public class DatabaseManager {
                 }
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Failed to initialize database", e);
+            logger.severe("Failed to initialize database: " + e.getMessage());
             throw new IllegalStateException("Database initialization failed", e);
         }
     }
@@ -104,7 +104,7 @@ public class DatabaseManager {
             stmt.setString(4, value);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error storing player data", e);
+            logger.severe("Error storing player data: " + e.getMessage());
             throw new IllegalStateException("Database operation failed", e);
         }
     }
@@ -121,7 +121,7 @@ public class DatabaseManager {
                 return rs.getString("value");
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error retrieving player data", e);
+            logger.severe("Error retrieving player data: " + e.getMessage());
             throw new IllegalStateException("Database operation failed", e);
         }
         return null;
