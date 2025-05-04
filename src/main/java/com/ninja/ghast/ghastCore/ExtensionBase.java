@@ -6,7 +6,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public abstract class ExtensionBase extends JavaPlugin {
     protected GhastCoreAPI api;
-    private ExtensionInfo info;
 
     @Override
     public void onEnable() {
@@ -24,26 +23,16 @@ public abstract class ExtensionBase extends JavaPlugin {
             return;
         }
 
-        info = new ExtensionInfo(
-                getDescription().getName(),
-                getDescription().getAuthors().isEmpty() ? "Unknown" : String.join(", ", getDescription().getAuthors()),
-                getDescription().getVersion(),
-                getDescription().getName().toLowerCase()
-        );
-
-        core.getExtensionManager().registerExtension(this, info);
-
         api = core.getAPI();
-
         onExtensionEnable();
-        getLogger().info("Extension " + info.name + " registered with GhastCore");
+        getLogger().info("Extension " + getDescription().getName() + " enabled");
     }
 
     @Override
     public void onDisable() {
         GhastCore core = GhastCore.getInstance();
         if (core != null) {
-            core.getExtensionManager().unregisterExtension(info.name);
+            core.getExtensionManager().unregisterExtension(getDescription().getName());
         }
     }
 
@@ -52,7 +41,12 @@ public abstract class ExtensionBase extends JavaPlugin {
     }
 
     public ExtensionInfo getExtensionInfo() {
-        return info;
+        return new ExtensionInfo(
+                getDescription().getName(),
+                getDescription().getAuthors().isEmpty() ? "Unknown" : String.join(", ", getDescription().getAuthors()),
+                getDescription().getVersion(),
+                getDescription().getName().toLowerCase()
+        );
     }
 
     public abstract void onExtensionEnable();

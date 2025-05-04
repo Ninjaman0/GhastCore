@@ -1,8 +1,13 @@
 name: GhastCore
-version: '2.0'
+version: '2.0.1'
 main: com.ninja.ghast.ghastCore.GhastCore
 api-version: '1.21'
+author: [ Ninja0_0 and ghastlegion dev team ]
+description: solid peace of art
 load: STARTUP
+loadbefore:
+  - WorldGuard
+softdepend: [PlaceholderAPI]
 commands:
   gcore:
     description: GhastCore management commands

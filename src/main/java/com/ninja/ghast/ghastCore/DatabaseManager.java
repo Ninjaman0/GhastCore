@@ -24,7 +24,7 @@ public class DatabaseManager {
 
     private void initializeDatabase() {
         FileConfiguration config = plugin.getConfig();
-        String dbType = config.getString("database.type", "sqlite");
+        String dbType = config.getString("database.type", "sqlite").toLowerCase();
 
         try {
             HikariConfig hikariConfig = new HikariConfig();
@@ -35,13 +35,12 @@ public class DatabaseManager {
             hikariConfig.setValidationTimeout(5000); // 5 seconds
             hikariConfig.setLeakDetectionThreshold(30000); // Detect leaks after 30s
 
-            if (dbType.equalsIgnoreCase("mysql")) {
+            if (dbType.equals("mysql")) {
                 String host = config.getString("database.mysql.host");
                 String port = config.getString("database.mysql.port");
                 String database = config.getString("database.mysql.database");
                 String username = config.getString("database.mysql.username");
                 String password = config.getString("database.mysql.password");
-
 
                 if (host == null) throw new IllegalArgumentException("MySQL host not configured");
                 if (port == null) throw new IllegalArgumentException("MySQL port not configured");
@@ -58,7 +57,6 @@ public class DatabaseManager {
             }
 
             dataSource = new HikariDataSource(hikariConfig);
-
 
             boolean tableExists = false;
             try (Connection conn = getConnection();

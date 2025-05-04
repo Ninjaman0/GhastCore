@@ -41,7 +41,7 @@ public class CoreCommand implements CommandExecutor {
                 sender.sendMessage("§6Loaded Extensions:");
                 for (ExtensionInfo info : extensionManager.getExtensions().values()) {
                     sender.sendMessage("§e- " + info.name + " v" + info.version +
-                            " by " + info.author);
+                            " by " + info.authors);
                 }
                 if (plugin.getConfig().getBoolean("extensions.lazy-load", false)) {
                     sender.sendMessage("§6Pending Extensions:");
@@ -52,8 +52,8 @@ public class CoreCommand implements CommandExecutor {
                 return true;
 
             case "register":
-                extensionManager.loadExtensions();
-                sender.sendMessage("§aExtensions reloaded");
+                extensionManager.loadAllPending();
+                sender.sendMessage("§aExtensions registered");
                 return true;
 
             case "reload":
@@ -63,7 +63,7 @@ public class CoreCommand implements CommandExecutor {
                     plugin.getDatabaseManager().closeConnection();
                     plugin.setDatabaseManager(new DatabaseManager(plugin));
                     plugin.getLogger().info("Database connection pool reinitialized");
-                    extensionManager.loadExtensions();
+                    extensionManager.loadAllPending();
                     plugin.getLogger().info("Extensions reloaded");
                     sender.sendMessage("§aGhastCore reloaded");
                 } catch (Exception e) {
@@ -86,11 +86,11 @@ public class CoreCommand implements CommandExecutor {
                     sender.sendMessage("§cUsage: /gcore check <extension>");
                     return true;
                 }
-                ExtensionInfo info = extensionManager.getExtensions().get(args[1]);
+                ExtensionInfo info = extensionManager.getExtensions().get(args[1].toLowerCase());
                 if (info != null) {
                     sender.sendMessage("§6Extension Info:");
                     sender.sendMessage("§eName: §f" + info.name);
-                    sender.sendMessage("§eAuthor: §f" + info.author);
+                    sender.sendMessage("§eAuthors: §f" + info.authors);
                     sender.sendMessage("§eVersion: §f" + info.version);
                     sender.sendMessage("§eNamespace: §f" + info.namespace);
                     sender.sendMessage("§eStatus: §aRegistered");

@@ -17,29 +17,37 @@ public class GhastCore extends JavaPlugin {
     private ScheduledExecutorService scheduler;
 
     @Override
+    public void onLoad() {
+        // Initialize logger early for extension loading
+        saveDefaultConfig();
+        logger = new LogManager(getLogger(), getConfig());
+        extensionManager = new ExtensionManager(this);
+        // Scan extensions without loading (safe for onLoad)
+        extensionManager.scanExtensions();
+        getLogger().info("GhastCore loaded extensions during STARTUP phase.");
+    }
+
+    @Override
     public void onEnable() {
         long start = System.currentTimeMillis();
         instance = this;
-        logger = new LogManager(getLogger(), getConfig());
 
-        saveDefaultConfig();
         dbManager = new DatabaseManager(this);
         boolean cachingEnabled = getConfig().getBoolean("caching.enabled", true);
         int cacheTTL = getConfig().getInt("caching.flushIntervalSeconds", 300);
         playerDataManager = new PlayerDataManagerImpl(dbManager, cachingEnabled, cacheTTL);
-        extensionManager = new ExtensionManager(this);
         api = new GhastCoreAPIImpl(dbManager, this);
 
         getServer().getPluginManager().registerEvents((PlayerDataManagerImpl) playerDataManager, this);
 
-        if (!getConfig().getBoolean("extensions.lazy-load", false)) {
-            extensionManager.loadExtensions();
-        } else {
-            extensionManager.scanExtensions();
-        }
-
         getCommand("gcore").setExecutor(new CoreCommand(this, extensionManager));
         getCommand("gcore").setTabCompleter(new CoreTabCompleter(extensionManager));
+
+        // Load extensions asynchronously after plugin is enabled
+        getServer().getScheduler().runTaskAsynchronously(this, () -> {
+            extensionManager.loadAllExtensions();
+            logger.info("Loaded all extensions successfully.");
+        });
 
         scheduler = Executors.newSingleThreadScheduledExecutor();
         scheduler.scheduleAtFixedRate(() -> extensionManager.unloadIdleExtensions(), 1, 1, TimeUnit.MINUTES);
@@ -49,11 +57,16 @@ public class GhastCore extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        
         if (scheduler != null) {
             scheduler.shutdown();
         }
+
         if (dbManager != null) {
             dbManager.closeConnection();
+        }
+        if (extensionManager != null) {
+            extensionManager.unloadIdleExtensions();
         }
         logger.info("GhastCore disabled");
     }
